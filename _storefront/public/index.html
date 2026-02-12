@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeaderLaunch — Professional Toolkits for People Who Lead</title>
+<meta name="description" content="Actionable toolkits, templates, and playbooks for managers, founders, and professionals. No fluff. Just the tools that work.">
+
+<!-- OG Tags -->
+<meta property="og:title" content="LeaderLaunch — Professional Toolkits for People Who Lead">
+<meta property="og:description" content="Actionable toolkits, templates, and playbooks for managers, founders, and professionals.">
+<meta property="og:type" content="website">
+
+<script>
+// ═══════════════════════════════════════════════════
+// PRODUCT CATALOG — Update this when adding products
+// ═══════════════════════════════════════════════════
+const STORE = {
+    brand: "LeaderLaunch",
+    tagline: "Professional toolkits for people who lead",
+    heroHeadline: "Stop guessing.<br>Start leading.",
+    heroSub: "Actionable playbooks, frameworks, and templates built for managers, founders, and professionals who refuse to wing it.",
+    contactEmail: "support@leaderlaunch.co",
+    
+    categories: [
+        { id: "management", label: "Management", icon: "👔", desc: "Lead teams with confidence" },
+        { id: "realestate", label: "Real Estate", icon: "🏠", desc: "Invest and manage smarter" },
+        { id: "business", label: "Business", icon: "📈", desc: "Build and scale operations" },
+        { id: "lifestyle", label: "Lifestyle", icon: "✨", desc: "Plan life's big moments" },
+        { id: "compliance", label: "Compliance", icon: "🛡️", desc: "Stay safe and certified" },
+        { id: "education", label: "Education", icon: "📚", desc: "Teach and train better" },
+    ],
+
+    products: [
+        {
+            slug: "new-manager-kit",
+            name: "The New Manager's 90-Day Kit",
+            shortName: "90-Day Manager Kit",
+            desc: "Week-by-week action plans, 19 conversation scripts, 5 worksheets, and proven frameworks for your first 90 days.",
+            price: 29,
+            originalPrice: 49,
+            category: "management",
+            badge: "Best Seller",
+            featured: true,
+            url: "#", // Update with Vercel URL when deployed
+            features: ["19 Conversation Scripts", "5 Fillable Worksheets", "30-60-90 Day Tracker", "Meeting Templates"],
+            pages: 18
+        },
+        {
+            slug: "homebuyer-checklist",
+            name: "First-Time Homebuyer Checklist Kit",
+            shortName: "Homebuyer Checklist",
+            desc: "Every step from pre-approval to closing day. Checklists, timelines, and negotiation scripts.",
+            price: 19,
+            originalPrice: 29,
+            category: "realestate",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["Pre-Approval Checklist", "Inspection Guide", "Closing Day Timeline", "Negotiation Scripts"],
+            pages: null
+        },
+        {
+            slug: "sop-template-pack",
+            name: "Small Business SOP Template Pack",
+            shortName: "SOP Templates",
+            desc: "Plug-and-play standard operating procedures for hiring, onboarding, finance, and operations.",
+            price: 39,
+            originalPrice: 59,
+            category: "business",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["12 SOP Templates", "Process Flowcharts", "Training Checklists", "Audit Worksheets"],
+            pages: null
+        },
+        {
+            slug: "wedding-planning-kit",
+            name: "Wedding Planning Timeline & Checklist",
+            shortName: "Wedding Planner",
+            desc: "12-month countdown with week-by-week tasks, vendor comparison sheets, and budget tracker.",
+            price: 14,
+            originalPrice: 24,
+            category: "lifestyle",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["12-Month Timeline", "Budget Tracker", "Vendor Comparison", "Day-Of Checklist"],
+            pages: null
+        },
+        {
+            slug: "osha-safety-guide",
+            name: "OSHA Safety Training Quick-Reference",
+            shortName: "OSHA Quick-Ref",
+            desc: "Pocket-sized safety reference cards, inspection checklists, and incident report templates.",
+            price: 29,
+            originalPrice: 39,
+            category: "compliance",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["Safety Reference Cards", "Inspection Checklists", "Incident Templates", "Training Log"],
+            pages: null
+        },
+        {
+            slug: "airbnb-host-kit",
+            name: "Airbnb Host Startup Kit",
+            shortName: "Airbnb Host Kit",
+            desc: "Listing optimization, pricing strategy, guest communication templates, and cleaning checklists.",
+            price: 29,
+            originalPrice: 49,
+            category: "realestate",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["Listing Templates", "Pricing Calculator", "Guest Scripts", "Turnover Checklist"],
+            pages: null
+        },
+        {
+            slug: "listing-presentation",
+            name: "Real Estate Listing Presentation Templates",
+            shortName: "Listing Presentations",
+            desc: "Client-ready presentation decks, market analysis templates, and CMA worksheets.",
+            price: 39,
+            originalPrice: 59,
+            category: "realestate",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["3 Presentation Decks", "CMA Template", "Market Analysis", "Client Scripts"],
+            pages: null
+        },
+        {
+            slug: "freelancer-onboarding",
+            name: "Freelancer Client Onboarding Pack",
+            shortName: "Client Onboarding",
+            desc: "Proposal templates, contracts, welcome packets, and project kickoff checklists.",
+            price: 19,
+            originalPrice: 29,
+            category: "business",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["Proposal Template", "Contract Template", "Welcome Packet", "Kickoff Checklist"],
+            pages: null
+        },
+        {
+            slug: "sub-teacher-plans",
+            name: "Substitute Teacher Plan Template Bundle",
+            shortName: "Sub Teacher Plans",
+            desc: "Emergency sub plans, classroom management cards, and activity templates for every grade level.",
+            price: 14,
+            originalPrice: 19,
+            category: "education",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["Sub Plan Templates", "Activity Sheets", "Classroom Cards", "Grade-Level Packs"],
+            pages: null
+        },
+        {
+            slug: "rental-inspection-kit",
+            name: "Rental Property Inspection Checklist Kit",
+            shortName: "Rental Inspections",
+            desc: "Move-in/move-out inspection forms, maintenance schedules, and photo documentation guides.",
+            price: 19,
+            originalPrice: 29,
+            category: "realestate",
+            badge: "Coming Soon",
+            featured: false,
+            url: "#",
+            features: ["Inspection Forms", "Photo Guide", "Maintenance Schedule", "Tenant Checklist"],
+            pages: null
+        }
+    ]
+};
+</script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══ RESET & VARIABLES ═══ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --navy: #0f2b46;
+    --navy-deep: #091e33;
+    --navy-light: #1a3d5c;
+    --gold: #c8973e;
+    --gold-light: #d4a85a;
+    --gold-pale: #f5edd8;
+    --cream: #faf8f4;
+    --cream-dark: #f0ece4;
+    --white: #ffffff;
+    --text: #2a2a2a;
+    --text-mid: #5a5a5a;
+    --text-light: #8a8a8a;
+    --border: #e4e0d8;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--text); background: var(--cream); -webkit-font-smoothing: antialiased; }
+
+/* ═══ NAV ═══ */
+nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15, 43, 70, 0.97); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200, 151, 62, 0.15);
+    padding: 0 32px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--gold); letter-spacing: -0.5px; text-decoration: none; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-cta { background: var(--gold); color: var(--navy); padding: 8px 20px; border-radius: 6px; font-weight: 600; font-size: 13px; text-decoration: none; transition: all 0.2s; }
+.nav-cta:hover { background: var(--gold-light); color: var(--navy); }
+
+/* ═══ HERO ═══ */
+.hero {
+    padding: 140px 32px 80px;
+    text-align: center;
+    background: var(--navy);
+    position: relative; overflow: hidden;
+}
+.hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(200,151,62,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(200,151,62,0.05) 0%, transparent 50%);
+}
+.hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+.hero-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+.hero-badge {
+    display: inline-block; padding: 6px 16px; border: 1px solid rgba(200,151,62,0.4);
+    border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--gold);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+}
+.hero h1 {
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(36px, 6vw, 58px);
+    color: var(--white); line-height: 1.1; margin-bottom: 20px;
+    animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero h1 br { display: block; }
+.hero p {
+    font-size: 17px; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 540px;
+    margin: 0 auto 36px; animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-stats {
+    display: flex; justify-content: center; gap: 48px; padding-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    animation: fadeUp 0.8s 0.3s ease both;
+}
+.hero-stat { text-align: center; }
+.hero-stat .num { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--gold); display: block; }
+.hero-stat .label { font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+/* ═══ FEATURED ═══ */
+.featured {
+    padding: 72px 32px;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    position: relative;
+}
+.featured-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.featured-content {}
+.featured-label { font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.featured-title { font-family: var(--font-display); font-weight: 700; font-size: 32px; color: var(--white); line-height: 1.2; margin-bottom: 14px; }
+.featured-desc { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 24px; }
+.featured-features { list-style: none; margin-bottom: 28px; }
+.featured-features li { color: rgba(255,255,255,0.7); font-size: 14px; padding: 6px 0; padding-left: 20px; position: relative; }
+.featured-features li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+.featured-price { display: flex; align-items: baseline; gap: 10px; margin-bottom: 20px; }
+.featured-price .current { font-family: var(--font-display); font-weight: 700; font-size: 36px; color: var(--gold); }
+.featured-price .original { font-size: 18px; color: rgba(255,255,255,0.3); text-decoration: line-through; }
+.featured-btn {
+    display: inline-block; padding: 14px 36px; background: var(--gold); color: var(--navy);
+    border-radius: 8px; font-weight: 700; font-size: 15px; text-decoration: none;
+    transition: all 0.2s; letter-spacing: 0.3px;
+}
+.featured-btn:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,151,62,0.3); }
+
+.featured-visual {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 36px; text-align: center;
+}
+.featured-visual .mock-cover {
+    width: 200px; height: 260px; margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+    border: 2px solid rgba(200,151,62,0.3); border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+}
+.mock-cover .mock-title { font-family: var(--font-display); font-size: 16px; color: var(--white); font-weight: 700; text-align: center; line-height: 1.2; }
+.mock-cover .mock-sub { font-size: 9px; color: var(--gold); margin-top: 8px; letter-spacing: 1px; text-transform: uppercase; }
+.mock-cover .mock-line { width: 40px; height: 2px; background: var(--gold); margin: 12px auto 0; }
+.featured-visual .mock-meta { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+/* ═══ CATEGORIES ═══ */
+.categories { padding: 80px 32px 40px; max-width: 1040px; margin: 0 auto; }
+.section-label { font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.section-title { font-family: var(--font-display); font-weight: 700; font-size: 32px; color: var(--navy); margin-bottom: 36px; }
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.cat-card {
+    background: var(--white); border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 20px 16px; text-align: center; cursor: pointer; transition: all 0.25s;
+    text-decoration: none; color: inherit;
+}
+.cat-card:hover, .cat-card.active { border-color: var(--gold); background: var(--gold-pale); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(200,151,62,0.12); }
+.cat-card .cat-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+.cat-card .cat-name { font-weight: 600; font-size: 14px; color: var(--navy); }
+.cat-card .cat-desc { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+
+/* ═══ PRODUCT GRID ═══ */
+.products { padding: 40px 32px 80px; max-width: 1040px; margin: 0 auto; }
+.products-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 28px; }
+.product-count { font-size: 14px; color: var(--text-light); }
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; }
+
+.product-card {
+    background: var(--white); border: 1.5px solid var(--border); border-radius: 14px;
+    overflow: hidden; transition: all 0.3s; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; position: relative;
+}
+.product-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+.product-card.coming-soon { opacity: 0.8; }
+.product-card.coming-soon:hover { opacity: 1; }
+
+.card-badge {
+    position: absolute; top: 14px; right: 14px;
+    padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.5px; z-index: 2;
+}
+.card-badge.best-seller { background: var(--gold); color: var(--navy); }
+.card-badge.coming-soon-badge { background: var(--navy); color: rgba(255,255,255,0.7); }
+
+.card-top {
+    padding: 28px 24px 20px;
+    background: linear-gradient(135deg, #f7f5f0 0%, #ede9e0 100%);
+    border-bottom: 1px solid var(--border);
+    min-height: 100px; display: flex; flex-direction: column; justify-content: flex-end;
+}
+.card-category { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.card-title { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--navy); line-height: 1.25; }
+
+.card-body { padding: 20px 24px; flex: 1; display: flex; flex-direction: column; }
+.card-desc { font-size: 13.5px; color: var(--text-mid); line-height: 1.6; margin-bottom: 16px; flex: 1; }
+.card-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.card-feature { font-size: 11px; padding: 4px 10px; background: var(--cream); border-radius: 4px; color: var(--text-mid); font-weight: 500; }
+
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border); }
+.card-price { display: flex; align-items: baseline; gap: 8px; }
+.card-price .current { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--navy); }
+.card-price .original { font-size: 14px; color: var(--text-light); text-decoration: line-through; }
+.card-action {
+    padding: 8px 20px; background: var(--navy); color: var(--white); border-radius: 6px;
+    font-size: 13px; font-weight: 600; transition: all 0.2s; display: inline-block;
+}
+.product-card:hover .card-action { background: var(--gold); color: var(--navy); }
+
+/* ═══ VALUE PROP ═══ */
+.value { padding: 80px 32px; background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.value-inner { max-width: 960px; margin: 0 auto; text-align: center; }
+.value-title { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--navy); margin-bottom: 40px; }
+.value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 36px; text-align: left; }
+.value-item {}
+.value-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+.value-item h3 { font-family: var(--font-display); font-weight: 600; font-size: 17px; color: var(--navy); margin-bottom: 6px; }
+.value-item p { font-size: 13.5px; color: var(--text-mid); line-height: 1.6; }
+
+/* ═══ FOOTER ═══ */
+footer {
+    background: var(--navy); padding: 60px 32px 32px; color: rgba(255,255,255,0.5);
+}
+.footer-inner { max-width: 960px; margin: 0 auto; }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; flex-wrap: wrap; gap: 32px; }
+.footer-brand { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--gold); margin-bottom: 8px; }
+.footer-tagline { font-size: 14px; color: rgba(255,255,255,0.4); }
+.footer-links h4 { color: rgba(255,255,255,0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.footer-links a { display: block; color: rgba(255,255,255,0.4); text-decoration: none; font-size: 14px; padding: 3px 0; transition: color 0.2s; }
+.footer-links a:hover { color: var(--gold); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; font-size: 13px; flex-wrap: wrap; gap: 12px; }
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(16px); transition: all 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.product-card { animation: fadeUp 0.5s ease both; }
+.product-card:nth-child(1) { animation-delay: 0s; }
+.product-card:nth-child(2) { animation-delay: 0.05s; }
+.product-card:nth-child(3) { animation-delay: 0.1s; }
+.product-card:nth-child(4) { animation-delay: 0.15s; }
+.product-card:nth-child(5) { animation-delay: 0.2s; }
+.product-card:nth-child(6) { animation-delay: 0.25s; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+    nav { padding: 0 16px; }
+    .nav-links { gap: 16px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero { padding: 120px 20px 60px; }
+    .hero-stats { gap: 24px; }
+    .featured-inner { grid-template-columns: 1fr; }
+    .featured-visual { display: none; }
+    .cat-grid { grid-template-columns: repeat(3, 1fr); }
+    .product-grid { grid-template-columns: 1fr; }
+    .footer-top { flex-direction: column; }
+}
+@media (max-width: 480px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { flex-direction: column; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+    <a href="#" class="nav-brand" id="navBrand"></a>
+    <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#categories">Categories</a>
+        <a href="#about">About</a>
+        <a href="#products" class="nav-cta">Browse Toolkits →</a>
+    </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-badge" id="heroBadge"></div>
+        <h1 id="heroTitle"></h1>
+        <p id="heroSub"></p>
+        <div class="hero-stats" id="heroStats"></div>
+    </div>
+</section>
+
+<!-- ═══ FEATURED PRODUCT ═══ -->
+<section class="featured" id="featured"></section>
+
+<!-- ═══ CATEGORIES ═══ -->
+<section class="categories" id="categories">
+    <div class="section-label">Browse by category</div>
+    <div class="section-title">Find your toolkit</div>
+    <div class="cat-grid" id="catGrid"></div>
+</section>
+
+<!-- ═══ PRODUCTS ═══ -->
+<section class="products" id="products">
+    <div class="products-header">
+        <div>
+            <div class="section-label" id="productsLabel">All Toolkits</div>
+            <div class="section-title" id="productsTitle">The Collection</div>
+        </div>
+        <div class="product-count" id="productCount"></div>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- ═══ VALUE PROP ═══ -->
+<section class="value reveal" id="about">
+    <div class="value-inner">
+        <div class="value-title">Why professionals choose LeaderLaunch</div>
+        <div class="value-grid">
+            <div class="value-item">
+                <span class="value-icon">🎯</span>
+                <h3>Action, Not Theory</h3>
+                <p>Every toolkit includes fillable worksheets, word-for-word scripts, and step-by-step checklists. Print it and go.</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon">⚡</span>
+                <h3>Instant Access</h3>
+                <p>Download immediately after purchase. No accounts, no apps, no waiting. Just a PDF that works on any device.</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon">💎</span>
+                <h3>No Fluff Guarantee</h3>
+                <p>We don't pad pages with theory. Every page earns its place with content you'll actually use.</p>
+            </div>
+            <div class="value-item">
+                <span class="value-icon">🔄</span>
+                <h3>Free Lifetime Updates</h3>
+                <p>Buy once, own forever. When we update a toolkit, you get the new version at no extra cost.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand" id="footerBrand"></div>
+                <div class="footer-tagline" id="footerTagline"></div>
+            </div>
+            <div class="footer-links">
+                <h4>Products</h4>
+                <div id="footerProducts"></div>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="#" id="footerEmail"></a>
+                <a href="#">Refund Policy</a>
+                <a href="#">Bulk Pricing</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span id="footerCopy"></span>
+            <span>All prices in USD. Secure payments via Stripe.</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+const { brand, tagline, heroHeadline, heroSub, contactEmail, categories, products } = STORE;
+let activeCategory = null;
+
+// Nav
+document.getElementById('navBrand').textContent = brand;
+
+// Hero
+document.getElementById('heroBadge').textContent = brand;
+document.getElementById('heroTitle').innerHTML = heroHeadline;
+document.getElementById('heroSub').textContent = heroSub;
+
+const liveCount = products.filter(p => p.badge !== 'Coming Soon').length;
+const totalProducts = products.length;
+const avgPrice = Math.round(products.reduce((s, p) => s + p.price, 0) / totalProducts);
+document.getElementById('heroStats').innerHTML = `
+    <div class="hero-stat"><span class="num">${totalProducts}</span><span class="label">Toolkits</span></div>
+    <div class="hero-stat"><span class="num">${categories.length}</span><span class="label">Categories</span></div>
+    <div class="hero-stat"><span class="num">$${avgPrice}</span><span class="label">Avg Price</span></div>
+    <div class="hero-stat"><span class="num">30-Day</span><span class="label">Money Back</span></div>
+`;
+
+// Featured product
+const feat = products.find(p => p.featured);
+if (feat) {
+    document.getElementById('featured').innerHTML = `
+    <div class="featured-inner">
+        <div class="featured-content">
+            <div class="featured-label">★ Featured Toolkit</div>
+            <div class="featured-title">${feat.name}</div>
+            <div class="featured-desc">${feat.desc}</div>
+            <ul class="featured-features">${feat.features.map(f => `<li>${f}</li>`).join('')}</ul>
+            <div class="featured-price">
+                <span class="current">$${feat.price}</span>
+                ${feat.originalPrice ? `<span class="original">$${feat.originalPrice}</span>` : ''}
+            </div>
+            <a href="${feat.url}" class="featured-btn">Get This Toolkit →</a>
+        </div>
+        <div class="featured-visual">
+            <div class="mock-cover">
+                <div class="mock-title">${feat.shortName || feat.name}</div>
+                <div class="mock-line"></div>
+                <div class="mock-sub">${brand}</div>
+            </div>
+            <div class="mock-meta">${feat.pages ? feat.pages + ' pages · ' : ''}PDF · Instant Download</div>
+        </div>
+    </div>`;
+}
+
+// Categories
+const catGrid = document.getElementById('catGrid');
+const allCard = document.createElement('div');
+allCard.className = 'cat-card active';
+allCard.innerHTML = `<span class="cat-icon">📦</span><div class="cat-name">All</div><div class="cat-desc">${totalProducts} toolkits</div>`;
+allCard.onclick = () => filterCategory(null);
+catGrid.appendChild(allCard);
+
+categories.forEach(cat => {
+    const count = products.filter(p => p.category === cat.id).length;
+    const card = document.createElement('div');
+    card.className = 'cat-card';
+    card.dataset.cat = cat.id;
+    card.innerHTML = `<span class="cat-icon">${cat.icon}</span><div class="cat-name">${cat.label}</div><div class="cat-desc">${count} toolkit${count !== 1 ? 's' : ''}</div>`;
+    card.onclick = () => filterCategory(cat.id);
+    catGrid.appendChild(card);
+});
+
+// Products
+function renderProducts(filter) {
+    const grid = document.getElementById('productGrid');
+    const filtered = filter ? products.filter(p => p.category === filter) : products;
+    
+    document.getElementById('productCount').textContent = `${filtered.length} toolkit${filtered.length !== 1 ? 's' : ''}`;
+    
+    grid.innerHTML = filtered.map((p, i) => {
+        const catInfo = categories.find(c => c.id === p.category);
+        const isComingSoon = p.badge === 'Coming Soon';
+        return `
+        <a href="${isComingSoon ? '#' : p.url}" class="product-card ${isComingSoon ? 'coming-soon' : ''}" style="animation-delay:${i * 0.05}s" ${!isComingSoon && p.url !== '#' ? 'target="_blank"' : ''}>
+            ${p.badge ? `<div class="card-badge ${p.badge === 'Best Seller' ? 'best-seller' : 'coming-soon-badge'}">${p.badge}</div>` : ''}
+            <div class="card-top">
+                <div class="card-category">${catInfo ? catInfo.icon + ' ' + catInfo.label : p.category}</div>
+                <div class="card-title">${p.name}</div>
+            </div>
+            <div class="card-body">
+                <div class="card-desc">${p.desc}</div>
+                <div class="card-features">${p.features.map(f => `<span class="card-feature">${f}</span>`).join('')}</div>
+                <div class="card-footer">
+                    <div class="card-price">
+                        <span class="current">$${p.price}</span>
+                        ${p.originalPrice ? `<span class="original">$${p.originalPrice}</span>` : ''}
+                    </div>
+                    <span class="card-action">${isComingSoon ? 'Coming Soon' : 'View →'}</span>
+                </div>
+            </div>
+        </a>`;
+    }).join('');
+}
+
+function filterCategory(catId) {
+    activeCategory = catId;
+    document.querySelectorAll('.cat-card').forEach(c => {
+        c.classList.toggle('active', catId === null ? !c.dataset.cat : c.dataset.cat === catId);
+    });
+    
+    if (catId) {
+        const cat = categories.find(c => c.id === catId);
+        document.getElementById('productsLabel').textContent = cat.label;
+        document.getElementById('productsTitle').textContent = cat.desc;
+    } else {
+        document.getElementById('productsLabel').textContent = 'All Toolkits';
+        document.getElementById('productsTitle').textContent = 'The Collection';
+    }
+    
+    renderProducts(catId);
+}
+
+renderProducts(null);
+
+// Footer
+document.getElementById('footerBrand').textContent = brand;
+document.getElementById('footerTagline').textContent = tagline;
+document.getElementById('footerEmail').textContent = contactEmail;
+document.getElementById('footerEmail').href = `mailto:${contactEmail}`;
+document.getElementById('footerCopy').textContent = `© ${new Date().getFullYear()} ${brand}. All rights reserved.`;
+
+const footerProds = document.getElementById('footerProducts');
+products.slice(0, 5).forEach(p => {
+    const a = document.createElement('a');
+    a.href = p.url;
+    a.textContent = p.shortName || p.name;
+    footerProds.appendChild(a);
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Smooth nav background
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(0,0,0,0.2)' : 'none';
+});
+</script>
+</body>
+</html>
