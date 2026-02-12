@@ -1,0 +1,45 @@
+{
+  "company": {
+    "name": "LeaderLaunch",
+    "email": "support@leaderlaunch.co",
+    "refund_policy": "Full refund within 30 days of purchase. No questions asked. Customer emails support, we process via Stripe within 1-2 business days.",
+    "delivery": "Instant digital download. After Stripe payment, customer is redirected to a download page. No email delivery — download happens immediately on the success page.",
+    "license": "Personal use license. One purchase = one person. Bulk pricing available on request.",
+    "payment": "All payments processed securely through Stripe. We accept all major credit cards, Apple Pay, Google Pay, and Link.",
+    "formats": "All products are delivered as professionally designed PDFs. They work on any device and can be printed at home or office.",
+    "updates": "Customers receive free lifetime updates to their purchased product. Updated versions are available at the same download link."
+  },
+  "products": {
+    "new-manager-kit": {
+      "name": "The New Manager's 90-Day Kit",
+      "brand": "LeaderLaunch",
+      "price": "$29",
+      "format": "PDF, 18 pages",
+      "description": "A complete playbook for first-time managers covering the first 90 days. Includes week-by-week action plans, 19 word-for-word conversation scripts, 5 fillable worksheets, proven management frameworks, printable checklists, and meeting templates.",
+      "contents": [
+        "Part 1: Mindset Shift (IC to Manager transition, team needs framework, 5 pre-day-1 questions)",
+        "Part 2: Days 1-30 (Week 1 listening tour day-by-day, 6 discovery meeting scripts, team assessment worksheet, stakeholder mapping template, weekly rhythm framework, 30-day checklist)",
+        "Part 3: Days 31-60 (SBI feedback framework with 6 scripts, team meeting agenda template, SMART + OKR goal-setting with worksheet, 60-day checklist)",
+        "Part 4: Days 61-90 (Delegation framework + worksheet, 4 difficult conversation scripts, 3 performance conversation scripts, 90-day self-assessment scorecard)",
+        "Part 5: Quick Reference (1:1 template, team meeting agenda, 10 feedback conversation starters, 30-60-90 day tracker)"
+      ],
+      "common_questions": {
+        "not_manager_yet": "Yes, many buyers purchase this before being promoted so they're prepared on Day 1. It's actually the best time to prepare.",
+        "experienced_manager": "This kit is designed for first-time managers, but experienced managers transitioning to a new team or company find the templates and frameworks valuable as a reset.",
+        "printable": "Yes, the entire kit is designed for standard letter size (8.5 x 11) printing. The worksheets have adequate fill space for handwriting.",
+        "editable": "The PDF is not editable — it's designed for printing and handwriting. This is intentional: research shows handwritten planning leads to better retention.",
+        "team_copies": "The license is for personal use. For team or organization-wide access, email us for bulk pricing.",
+        "format": "Single PDF file. Works on any device (computer, tablet, phone). Can be printed at home or office."
+      }
+    }
+  },
+  "common_issues": {
+    "cant_download": "The download is available immediately after payment on the success page. If you navigated away, check your browser's download history. If you still can't access it, reply to this email with your order confirmation and we'll send the file directly.",
+    "wrong_product": "We're sorry about that. Please reply with your order details and we'll get this sorted right away — either with the correct product or a full refund.",
+    "payment_failed": "Payment issues are handled by Stripe. Please try again with a different card or payment method. If the problem persists, your bank may be blocking the transaction — contact them to authorize it.",
+    "refund_request": "We process refunds within 1-2 business days. Your refund has been noted and our team will process it shortly. You'll see the credit on your statement within 5-10 business days depending on your bank.",
+    "bulk_pricing": "We offer volume discounts for teams and organizations. Our team will follow up with pricing options based on your team size.",
+    "other": "Thank you for reaching out. Our team will review your message and get back to you within 24 hours."
+  },
+  "tone_guidelines": "Respond as a helpful, professional support agent. Be warm but concise. Never be defensive. If the customer is upset, acknowledge their frustration first. Always provide a clear next step. Sign off as 'The LeaderLaunch Team'."
+}

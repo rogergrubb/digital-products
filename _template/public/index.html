@@ -61,7 +61,11 @@
             metaDescription: "Get the complete professional development training package with frameworks, worksheets, and checklists used by top performers.",
             
             // Success page URL (where Stripe redirects after payment)
-            successPage: "/success.html"
+            successPage: "/success.html",
+            
+            // Support System
+            productSlug: "your-product-slug",  // Must match key in knowledge/products.json
+            supportApiUrl: "https://your-support-api.vercel.app/api/support" // Central support API
         };
     </script>
 
@@ -581,6 +585,128 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ===== SUPPORT FORM =====
+        if (CONFIG.supportApiUrl && CONFIG.supportApiUrl !== 'https://your-support-api.vercel.app/api/support') {
+            document.getElementById('supportFab').style.display = 'flex';
+        }
+    </script>
+
+    <!-- ===== SUPPORT MODAL ===== -->
+    <button id="supportFab" onclick="document.getElementById('supportModal').classList.add('open')" style="display:none;position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:22px;box-shadow:0 4px 20px rgba(0,0,0,0.3);z-index:9998;align-items:center;justify-content:center;transition:transform 0.2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">?</button>
+
+    <div id="supportModal" style="display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity 0.3s">
+        <div style="background:#fff;border-radius:16px;max-width:460px;width:90%;max-height:90vh;overflow-y:auto;padding:32px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+            <button onclick="document.getElementById('supportModal').classList.remove('open')" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#999">×</button>
+            <h3 style="color:var(--dark);margin:0 0 4px;font-family:var(--font-display);font-size:22px">Need Help?</h3>
+            <p style="color:#666;margin:0 0 20px;font-size:14px">We usually respond within minutes.</p>
+
+            <div id="supportFormWrap">
+                <div style="margin-bottom:14px">
+                    <label style="display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:4px">Your Name *</label>
+                    <input id="sf_name" type="text" placeholder="Jane Smith" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;font-family:inherit">
+                </div>
+                <div style="margin-bottom:14px">
+                    <label style="display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:4px">Email *</label>
+                    <input id="sf_email" type="email" placeholder="jane@company.com" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;font-family:inherit">
+                </div>
+                <div style="margin-bottom:14px">
+                    <label style="display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:4px">What do you need help with?</label>
+                    <select id="sf_type" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;font-family:inherit;background:#fff">
+                        <option value="question">Product question</option>
+                        <option value="download">Download issue</option>
+                        <option value="payment">Payment problem</option>
+                        <option value="refund">Refund request</option>
+                        <option value="bulk">Bulk / team pricing</option>
+                        <option value="other">Something else</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:14px">
+                    <label style="display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:4px">Order Number <span style="color:#999">(optional)</span></label>
+                    <input id="sf_order" type="text" placeholder="From your confirmation email" style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;font-family:inherit">
+                </div>
+                <div style="margin-bottom:18px">
+                    <label style="display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:4px">How can we help? *</label>
+                    <textarea id="sf_msg" rows="4" placeholder="Describe your issue or question..." style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;font-family:inherit;resize:vertical"></textarea>
+                </div>
+                <button id="sf_submit" onclick="submitSupport()" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity 0.2s">Send Message</button>
+                <p id="sf_error" style="color:#c0392b;font-size:13px;margin:8px 0 0;display:none"></p>
+            </div>
+
+            <div id="supportSuccess" style="display:none;text-align:center;padding:20px 0">
+                <div style="font-size:48px;margin-bottom:12px">✅</div>
+                <h3 style="color:var(--dark);margin:0 0 8px;font-size:20px">Message Sent!</h3>
+                <p style="color:#666;font-size:14px;margin:0 0 4px">Check your email for a response.</p>
+                <p style="color:#999;font-size:13px;margin:0" id="sf_ticketId"></p>
+                <button onclick="resetSupportForm()" style="margin-top:16px;padding:10px 24px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #supportModal.open { opacity:1; pointer-events:all; }
+        #supportModal.open > div { animation: modalIn 0.3s ease; }
+        @keyframes modalIn { from { transform: translateY(20px) scale(0.95); opacity:0; } to { transform: translateY(0) scale(1); opacity:1; } }
+        #sf_submit:hover { opacity: 0.9; }
+        #sf_submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+
+    <script>
+    async function submitSupport() {
+        const name = document.getElementById('sf_name').value.trim();
+        const email = document.getElementById('sf_email').value.trim();
+        const message = document.getElementById('sf_msg').value.trim();
+        const issueType = document.getElementById('sf_type').value;
+        const orderNumber = document.getElementById('sf_order').value.trim();
+        const errEl = document.getElementById('sf_error');
+        const btn = document.getElementById('sf_submit');
+
+        errEl.style.display = 'none';
+
+        if (!name || !email || !message) {
+            errEl.textContent = 'Please fill in all required fields.';
+            errEl.style.display = 'block';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        try {
+            const res = await fetch(CONFIG.supportApiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name, email, message, issueType, orderNumber,
+                    product: CONFIG.productSlug
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                document.getElementById('supportFormWrap').style.display = 'none';
+                document.getElementById('supportSuccess').style.display = 'block';
+                document.getElementById('sf_ticketId').textContent = 'Ticket: ' + data.ticketId;
+            } else {
+                errEl.textContent = data.error || 'Something went wrong. Please try again.';
+                errEl.style.display = 'block';
+            }
+        } catch (err) {
+            errEl.textContent = 'Connection error. Please email us directly at ' + CONFIG.contactEmail;
+            errEl.style.display = 'block';
+        }
+
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+    }
+
+    function resetSupportForm() {
+        document.getElementById('supportFormWrap').style.display = 'block';
+        document.getElementById('supportSuccess').style.display = 'none';
+        document.getElementById('supportModal').classList.remove('open');
+        ['sf_name','sf_email','sf_msg','sf_order'].forEach(id => document.getElementById(id).value = '');
+    }
     </script>
 </body>
 </html>
