@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ============================================
+         🔧 CONFIGURATION — EDIT THIS SECTION ONLY
+         ============================================ -->
+    <script>
+        const CONFIG = {
+            // Product Details
+            productName: "The New Manager's 90-Day Kit",
+            tagline: "Everything you need to crush your first 90 days as a manager — without the guesswork",
+            description: "A complete playbook for first-time managers with week-by-week action plans, conversation scripts, feedback frameworks, delegation tools, and printable checklists.",
+            
+            // Pricing
+            price: "29",
+            originalPrice: "49",
+            currency: "$",
+            
+            // Stripe Payment Link
+            stripePaymentLink: "https://buy.stripe.com/7sYaEZ8YE15r6HY3qgaIM03",
+            
+            // What's Included
+            features: [
+                { icon: "📅", title: "Week-by-Week Action Plans", desc: "Exactly what to do in Days 1–30, 31–60, and 61–90 — no guessing" },
+                { icon: "💬", title: "Conversation Scripts", desc: "Word-for-word scripts for feedback, difficult conversations, and first 1:1s" },
+                { icon: "📋", title: "Printable Checklists", desc: "30-day, 60-day, and 90-day checkpoint checklists to track your progress" },
+                { icon: "📊", title: "Team Assessment Tools", desc: "Worksheets to evaluate your team's strengths, gaps, and growth areas" },
+                { icon: "🎯", title: "Meeting Templates", desc: "Ready-to-use agendas for 1:1s, team meetings, and stakeholder check-ins" },
+                { icon: "🔄", title: "Self-Assessment Scorecard", desc: "Rate your own performance across 8 key management dimensions" }
+            ],
+            
+            // Testimonials
+            testimonials: [
+                { name: "Marcus T.", role: "Engineering Manager", text: "I was promoted on a Friday and had this kit by Monday. The week-by-week plan kept me from making the classic mistakes." },
+                { name: "Lisa P.", role: "Director of Operations", text: "I give this to every new manager on my team. The feedback scripts alone are worth 10x the price." },
+                { name: "Kevin W.", role: "First-Time Manager", text: "I went from terrified to confident in about 6 weeks. The 1:1 framework completely changed my relationship with my team." }
+            ],
+            
+            // FAQ
+            faq: [
+                { q: "I'm not a manager yet — is this still useful?", a: "Absolutely. Many people buy this before they get promoted so they're ready on Day 1. It's actually the best time to prepare." },
+                { q: "What format is the kit in?", a: "It's a professionally designed 14-page PDF with fillable worksheets, printable checklists, and reference cards. Works on any device." },
+                { q: "Is this a one-time payment?", a: "Yes. Pay once, own it forever. No subscriptions, no upsells, no hidden fees." },
+                { q: "Can I share this with my team?", a: "The license is for personal use. If you'd like copies for your team, email us for bulk pricing." },
+                { q: "What if it's not right for me?", a: "Full refund within 30 days. No questions asked. Just email us." }
+            ],
+            
+            // Guarantee
+            guarantee: "30-Day Money-Back Guarantee — No questions asked.",
+            
+            // Branding
+            brandName: "LeaderLaunch",
+            brandAccentColor: "#c8973e",
+            brandDarkColor: "#0f2b46",
+            contactEmail: "support@leaderlaunch.co",
+            
+            // SEO
+            metaTitle: "The New Manager's 90-Day Kit | LeaderLaunch",
+            metaDescription: "The complete playbook for first-time managers. Week-by-week action plans, conversation scripts, feedback frameworks, and printable checklists.",
+            
+            // Success page
+            successPage: "/success.html"
+        };
+    </script>
+
+    <script>
+        document.title = CONFIG.metaTitle;
+    </script>
+    <meta name="description" id="metaDesc">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #D4A853;
+            --dark: #1a1a2e;
+            --darker: #12121f;
+            --card: #1f1f35;
+            --text: #e8e6e1;
+            --text-muted: #9a9a9a;
+            --text-dim: #6a6a7a;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--darker);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        section { position: relative; z-index: 1; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212,168,83,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid rgba(212,168,83,0.3);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 32px;
+            animation: fadeDown 0.8s ease;
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 24px;
+            animation: fadeDown 0.8s ease 0.1s both;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .hero p.subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto 48px;
+            animation: fadeDown 0.8s ease 0.2s both;
+        }
+
+        /* ===== CTA BUTTON ===== */
+        .cta-wrap {
+            animation: fadeDown 0.8s ease 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, var(--accent), #c49a3c);
+            color: var(--dark);
+            font-family: var(--sans);
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 24px rgba(212,168,83,0.25), 0 0 0 0 rgba(212,168,83,0);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(212,168,83,0.35), 0 0 0 4px rgba(212,168,83,0.1);
+        }
+
+        .cta-button:active { transform: translateY(0); }
+
+        .price-tag {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .price-tag .current {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .price-tag .original {
+            text-decoration: line-through;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: var(--serif);
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            color: #fff;
+            margin-bottom: 56px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(212,168,83,0.15);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 80px 0;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .testimonial-card .stars {
+            color: var(--accent);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-card blockquote {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-card .author {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .testimonial-card .author span {
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        /* ===== FAQ ===== */
+        .faq {
+            padding: 80px 0;
+        }
+
+        .faq-list {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 24px 0;
+        }
+
+        .faq-item summary {
+            font-weight: 600;
+            font-size: 1.02rem;
+            color: #fff;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item summary::-webkit-details-marker { display: none; }
+
+        .faq-item summary::after {
+            content: '+';
+            font-size: 1.4rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-item .answer {
+            padding-top: 16px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ===== FINAL CTA ===== */
+        .final-cta {
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+
+        .final-cta .guarantee {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(212,168,83,0.08);
+            border: 1px solid rgba(212,168,83,0.15);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-top: 24px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            border-top: 1px solid rgba(255,255,255,0.04);
+            position: relative;
+            z-index: 1;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .hero { padding: 72px 0 56px; }
+            .features-grid, .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+            .cta-button { padding: 18px 36px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="badge" id="brandBadge"></div>
+            <h1 id="heroTitle"></h1>
+            <p class="subtitle" id="heroSubtitle"></p>
+            <div class="cta-wrap">
+                <a class="cta-button" id="ctaTop" href="#">
+                    Get Instant Access →
+                </a>
+                <div class="price-tag" id="priceTag"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features reveal">
+        <div class="container">
+            <p class="section-label">What's Inside</p>
+            <h2 class="section-title">Everything you need to get started</h2>
+            <div class="features-grid" id="featuresGrid"></div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials reveal" id="testimonialsSection">
+        <div class="container">
+            <p class="section-label">Trusted By Professionals</p>
+            <h2 class="section-title">What people are saying</h2>
+            <div class="testimonial-grid" id="testimonialGrid"></div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq reveal" id="faqSection">
+        <div class="container">
+            <p class="section-label">Questions?</p>
+            <h2 class="section-title">Frequently Asked</h2>
+            <div class="faq-list" id="faqList"></div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta reveal">
+        <div class="container">
+            <h2 class="section-title">Ready to level up?</h2>
+            <a class="cta-button" id="ctaBottom" href="#">
+                Get Instant Access →
+            </a>
+            <div class="price-tag" id="priceTagBottom"></div>
+            <div class="guarantee" id="guarantee"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p id="footerText"></p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== RENDER FROM CONFIG =====
+        document.getElementById('metaDesc')?.setAttribute('content', CONFIG.metaDescription);
+        document.documentElement.style.setProperty('--accent', CONFIG.brandAccentColor);
+        document.documentElement.style.setProperty('--dark', CONFIG.brandDarkColor);
+
+        // Hero
+        document.getElementById('brandBadge').textContent = CONFIG.brandName;
+        document.getElementById('heroTitle').innerHTML = CONFIG.productName.replace(
+            /(Training Guide|Toolkit|Package|Bundle|Playbook|Manual|Blueprint|Masterclass)/i, 
+            '<em>$1</em>'
+        );
+        document.getElementById('heroSubtitle').textContent = CONFIG.tagline;
+
+        // CTA links
+        document.getElementById('ctaTop').href = CONFIG.stripePaymentLink;
+        document.getElementById('ctaBottom').href = CONFIG.stripePaymentLink;
+
+        // Price
+        function renderPrice(elId) {
+            const el = document.getElementById(elId);
+            let html = `<span class="current">${CONFIG.currency}${CONFIG.price}</span>`;
+            if (CONFIG.originalPrice) {
+                html = `<span class="original">${CONFIG.currency}${CONFIG.originalPrice}</span> ` + html;
+            }
+            el.innerHTML = html;
+        }
+        renderPrice('priceTag');
+        renderPrice('priceTagBottom');
+
+        // Features
+        const featGrid = document.getElementById('featuresGrid');
+        CONFIG.features.forEach(f => {
+            featGrid.innerHTML += `
+                <div class="feature-card">
+                    <div class="feature-icon">${f.icon}</div>
+                    <h3>${f.title}</h3>
+                    <p>${f.desc}</p>
+                </div>`;
+        });
+
+        // Testimonials
+        if (CONFIG.testimonials.length === 0) {
+            document.getElementById('testimonialsSection').style.display = 'none';
+        } else {
+            const testGrid = document.getElementById('testimonialGrid');
+            CONFIG.testimonials.forEach(t => {
+                testGrid.innerHTML += `
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <blockquote>"${t.text}"</blockquote>
+                        <div class="author">${t.name} <span>— ${t.role}</span></div>
+                    </div>`;
+            });
+        }
+
+        // FAQ
+        if (CONFIG.faq.length === 0) {
+            document.getElementById('faqSection').style.display = 'none';
+        } else {
+            const faqList = document.getElementById('faqList');
+            CONFIG.faq.forEach(f => {
+                faqList.innerHTML += `
+                    <details class="faq-item">
+                        <summary>${f.q}</summary>
+                        <div class="answer">${f.a}</div>
+                    </details>`;
+            });
+        }
+
+        // Guarantee
+        document.getElementById('guarantee').innerHTML = `🛡️ ${CONFIG.guarantee}`;
+
+        // Footer
+        document.getElementById('footerText').innerHTML = 
+            `© ${new Date().getFullYear()} ${CONFIG.brandName}. All rights reserved. — <a href="mailto:${CONFIG.contactEmail}">${CONFIG.contactEmail}</a>`;
+
+        // ===== SCROLL REVEAL =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

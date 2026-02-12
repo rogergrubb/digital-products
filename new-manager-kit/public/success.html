@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Your Purchase</title>
+    
+    <!-- ============================================
+         🔧 CONFIGURATION — MUST MATCH index.html
+         ============================================ -->
+    <script>
+        const CONFIG = {
+            productName: "The New Manager's 90-Day Kit",
+            brandName: "LeaderLaunch",
+            brandAccentColor: "#c8973e",
+            brandDarkColor: "#0f2b46",
+            contactEmail: "support@leaderlaunch.co",
+            
+            downloadFile: "/products/new-manager-90-day-kit.pdf",
+            downloadFileName: "New-Managers-90-Day-Kit.pdf"
+        };
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #D4A853;
+            --dark: #1a1a2e;
+            --darker: #12121f;
+            --card: #1f1f35;
+            --text: #e8e6e1;
+            --text-muted: #9a9a9a;
+            --text-dim: #6a6a7a;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--darker);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .success-container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 560px;
+            padding: 24px;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #c49a3c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            font-size: 2.2rem;
+            animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .success-container h1 {
+            font-family: var(--serif);
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 12px;
+            animation: fadeUp 0.7s ease 0.2s both;
+        }
+
+        .success-container p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 40px;
+            animation: fadeUp 0.7s ease 0.3s both;
+        }
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 48px;
+            background: linear-gradient(135deg, var(--accent), #c49a3c);
+            color: var(--dark);
+            font-family: var(--sans);
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 24px rgba(212,168,83,0.25);
+            animation: fadeUp 0.7s ease 0.4s both;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(212,168,83,0.35);
+        }
+
+        .help-text {
+            margin-top: 32px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            animation: fadeUp 0.7s ease 0.5s both;
+        }
+
+        .help-text a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -20px;
+            animation: confettiFall 3s ease-in forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="confetti" id="confetti"></div>
+
+    <div class="success-container">
+        <div class="checkmark">✓</div>
+        <h1>You're all set!</h1>
+        <p id="successMsg"></p>
+        <a class="download-button" id="downloadBtn" href="#">
+            ↓ Download Now
+        </a>
+        <p class="help-text" id="helpText"></p>
+    </div>
+
+    <script>
+        document.documentElement.style.setProperty('--accent', CONFIG.brandAccentColor);
+        document.documentElement.style.setProperty('--dark', CONFIG.brandDarkColor);
+
+        document.getElementById('successMsg').textContent = 
+            `Thank you for purchasing the ${CONFIG.productName}. Your download is ready.`;
+        
+        const dlBtn = document.getElementById('downloadBtn');
+        dlBtn.href = CONFIG.downloadFile;
+        dlBtn.setAttribute('download', CONFIG.downloadFileName);
+
+        document.getElementById('helpText').innerHTML = 
+            `Having trouble? Contact <a href="mailto:${CONFIG.contactEmail}">${CONFIG.contactEmail}</a>`;
+
+        // Confetti
+        const colors = ['#D4A853', '#c49a3c', '#e8c674', '#fff', '#9a8a5a'];
+        const confettiContainer = document.getElementById('confetti');
+        for (let i = 0; i < 50; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.animationDelay = Math.random() * 1.5 + 's';
+            piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+            piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+            piece.style.width = (6 + Math.random() * 8) + 'px';
+            piece.style.height = (6 + Math.random() * 8) + 'px';
+            confettiContainer.appendChild(piece);
+        }
+    </script>
+</body>
+</html>
